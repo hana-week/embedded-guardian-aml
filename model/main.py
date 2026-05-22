@@ -2,8 +2,12 @@
 임베디드 가디언 크로스체인 AML 파이프라인
 전체 실행 진입점
 
+실행 방법:
+  python main.py              # 합성 데이터로 실행 (기본)
+  python main.py --real       # 금융결제원 실데이터로 실행 (현장)
+
 실행 순서:
-  Step 1. 합성 데이터 생성
+  Step 1. 데이터 로딩 (합성 or 실데이터)
   Step 2. EDA 분석
   Step 3. Layer 1 규칙 엔진
   Step 4. Layer 2 GNN 학습
@@ -16,6 +20,8 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT))
 
+USE_REAL_DATA = "--real" in sys.argv
+
 
 def separator(title: str):
     print(f"\n{'='*55}")
@@ -24,19 +30,23 @@ def separator(title: str):
 
 
 def step1_generate_data():
-    separator("Step 1 — 합성 데이터 생성")
-    from data.synthetic_data import generate_accounts, generate_transactions, OUTPUT_DIR
+    if USE_REAL_DATA:
+        separator("Step 1 — 금융결제원 실데이터 로딩")
+        from data.real_data_loader import load_real_data, DATA_ROOT
+        print(f"데이터 경로: {DATA_ROOT}")
+        accounts, transactions = load_real_data()
+    else:
+        separator("Step 1 — 합성 데이터 생성")
+        from data.synthetic_data import generate_accounts, generate_transactions, OUTPUT_DIR
 
-    accounts = generate_accounts()
-    print(f"계좌: {len(accounts):,}개  |  의심: {accounts['is_suspicious'].sum():,}개")
+        accounts = generate_accounts()
+        transactions = generate_transactions(accounts)
+        accounts.to_csv(OUTPUT_DIR / "accounts.csv", index=False, encoding="utf-8-sig")
+        transactions.to_csv(OUTPUT_DIR / "transactions.csv", index=False, encoding="utf-8-sig")
 
-    transactions = generate_transactions(accounts)
     aml = transactions["aml_label"].sum()
-    print(f"거래: {len(transactions):,}건  |  AML: {aml:,}건 ({aml/len(transactions)*100:.1f}%)")
-
-    accounts.to_csv(OUTPUT_DIR / "accounts.csv", index=False, encoding="utf-8-sig")
-    transactions.to_csv(OUTPUT_DIR / "transactions.csv", index=False, encoding="utf-8-sig")
-    print("저장 완료")
+    print(f"계좌: {len(accounts):,}개  |  의심: {accounts['is_suspicious'].sum():,}개")
+    print(f"거래: {len(transactions):,}건  |  AML: {int(aml):,}건 ({aml/len(transactions)*100:.1f}%)")
     return accounts, transactions
 
 
