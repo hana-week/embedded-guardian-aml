@@ -13,6 +13,17 @@ try:
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
+    import matplotlib.font_manager as fm
+
+    # Windows 한글 폰트 설정 (맑은 고딕 우선, 없으면 나눔고딕)
+    _korean_fonts = ["Malgun Gothic", "NanumGothic", "AppleGothic", "UnDotum"]
+    _available = {f.name for f in fm.fontManager.ttflist}
+    for _font in _korean_fonts:
+        if _font in _available:
+            plt.rcParams["font.family"] = _font
+            break
+    plt.rcParams["axes.unicode_minus"] = False  # 마이너스 기호 깨짐 방지
+
     HAS_PLOT = True
 except ImportError:
     HAS_PLOT = False
@@ -22,7 +33,7 @@ except ImportError:
 def load_data():
     accounts = pd.read_csv(DATA_DIR / "accounts.csv")
     transactions = pd.read_csv(DATA_DIR / "transactions.csv")
-    transactions["date"] = pd.to_datetime(transactions["date"])
+    transactions["date"] = pd.to_datetime(transactions["date"], format="mixed")
     return accounts, transactions
 
 
