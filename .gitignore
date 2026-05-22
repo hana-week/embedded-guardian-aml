@@ -60,3 +60,6 @@ Thumbs.db
 # 환경 변수
 .env
 *.env
+
+# 개인 초안 문서
+linkedin-*.md
