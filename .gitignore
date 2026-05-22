@@ -37,6 +37,9 @@ model/eda/account_risk_profile.csv
 # 학습 결과물 (대용량)
 model/layer2/gnn_weights.pt
 
+# 오프라인 패키지 wheel 파일 (USB용 바이너리, 대용량)
+offline_packages/*.whl
+
 # 분석 결과 CSV (재실행으로 생성 가능)
 model/layer1/layer1_results.csv
 model/layer2/ensemble_results.csv
