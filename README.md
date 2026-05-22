@@ -5,7 +5,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-orange.svg)](https://pytorch.org/)
-[![License](https://img.shields.io/badge/License-Private-red.svg)]()
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![F1 Score](https://img.shields.io/badge/F1%20Score-0.942-brightgreen.svg)]()
 
 ---
@@ -64,6 +64,12 @@
 | **앙상블 최종** | **0.890** | **1.000** | **0.942** |
 
 > 목표 F1 ≥ 0.90 달성
+
+### EDA 시각화
+
+![AML EDA 결과](model/eda/eda_result.png)
+
+> 합성 데이터 기준. 금융결제원 D-테스트베드 실험(2026.06) 후 실데이터 결과로 업데이트 예정.
 
 ---
 
@@ -208,4 +214,4 @@ python model/layer2/gnn_model.py      # GNN 학습만
 
 ---
 
-> 본 저장소는 비공개 연구 목적으로 관리됩니다. 무단 복제 및 배포를 금지합니다.
+> Apache 2.0 License — 출처 표기 조건으로 자유롭게 사용 가능합니다.
