@@ -1,0 +1,59 @@
+# Claude Code / OMC 내부 상태 (커밋 불필요)
+.omc/
+.claude/
+model/.omc/
+
+# 개인 문서 및 데이터
+*.pdf
+*.xlsx
+*.docx
+output/
+
+# 기타 스크립트 (AML 모델 외)
+create_*.py
+make_report.py
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# 가상환경
+venv/
+.venv/
+env/
+
+# 데이터 (생성된 CSV - 재생성 가능)
+model/data/accounts.csv
+model/data/transactions.csv
+model/eda/account_risk_profile.csv
+
+# 학습 결과물 (대용량)
+model/layer2/gnn_weights.pt
+
+# 분석 결과 CSV (재실행으로 생성 가능)
+model/layer1/layer1_results.csv
+model/layer2/ensemble_results.csv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# 환경 변수
+.env
+*.env
